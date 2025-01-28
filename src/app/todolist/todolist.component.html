@@ -1,38 +1,51 @@
 <div class="container">
-  <h1>Minha To-Do List</h1>
+  <h1>To-Do List</h1>
   <form (ngSubmit)="onSubmit(myForm)" #myForm="ngForm">
     <div class="form-group">
-      <hr>
+      <hr />
       <label for="task">Task</label>
-      <input type="text"
-             class="form-control"
-             id="task"
-             name="task"
-             placeholder="Enter task" ngModel required>
+      <input
+        type="text"
+        class="form-control"
+        id="task"
+        name="task"
+        placeholder="Enter task"
+        ngModel
+        required
+      />
       <small id="taskHelp" class="form-text text-muted">Required field</small>
     </div>
-    <button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
+    <button id="submitButton" type="submit" class="btn btn-primary">
+      Submit
+    </button>
   </form>
 
-<table class="table">
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">Tarefa</th>
-    <th scope="col">Completado</th>
-    <th scope="col">Apagar</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let task of taskArray; let i = index">
-    <th scope="row">{{i + 1}}</th>
-    <td>{{task.taskName}}</td>
-    <td>
-      <input type="checkbox" [checked]="task.isCompleted" (change)="onCheck(i)"/>
-    </td>
-    <td>
-      <button class="btn btn-danger btn-sm" (click)="onDelete(i)">Apagar</button>
-    </td>
-  </tbody>
-</table>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Task</th>
+        <th scope="col">Completed</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of taskArray; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ task.taskName }}</td>
+        <td>
+          <input
+            type="checkbox"
+            [checked]="task.isCompleted"
+            (change)="onCheck(i)"
+          />
+        </td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="onDelete(i)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
