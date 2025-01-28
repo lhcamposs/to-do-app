@@ -1,9 +1,9 @@
 <div class="container">
   <h1>To-Do List</h1>
-  <form (ngSubmit)="onSubmit(myForm)" #myForm="ngForm">
+  <hr />
+  <form id="submitform" (ngSubmit)="onSubmit(myForm)" #myForm="ngForm">
     <div class="form-group">
       <hr />
-      <label for="task">Task</label>
       <input
         type="text"
         class="form-control"
@@ -27,12 +27,28 @@
         <th scope="col">Task</th>
         <th scope="col">Completed</th>
         <th scope="col">Delete</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Save</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let task of taskArray; let i = index">
         <th scope="row">{{ i + 1 }}</th>
-        <td>{{ task.taskName }}</td>
+        <td>
+          <input
+            [ngClass]="{
+              'edit': task.isEditable,
+              'not-edit': !task.isEditable,
+              'crossed': task.isCompleted
+            }"
+            #taskinput
+            type="text"
+            class="form-control"
+            id="taskInTable"
+            value="{{ task.taskName }}"
+            [readOnly]="!task.isEditable"
+          />
+        </td>
         <td>
           <input
             type="checkbox"
@@ -41,8 +57,32 @@
           />
         </td>
         <td>
-          <button class="btn btn-danger btn-sm" (click)="onDelete(i)">
+          <button
+            id="delete"
+            class="btn btn-danger btn-sm"
+            (click)="onDelete(i)"
+          >
             Delete
+          </button>
+        </td>
+        <td>
+          <button
+            id="edit"
+            class="btn btn-primary btn-sm"
+            (click)="onEdit(i)"
+            [disabled]="task.isEditable"
+          >
+            Edit
+          </button>
+        </td>
+        <td>
+          <button
+            id="save"
+            class="btn btn-warning btn-sm"
+            (click)="onSave(i, taskinput.value)"
+            [disabled]="!task.isEditable"
+          >
+            Save
           </button>
         </td>
       </tr>
