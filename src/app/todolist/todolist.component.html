@@ -3,7 +3,6 @@
   <hr />
   <form id="submitform" (ngSubmit)="onSubmit(myForm)" #myForm="ngForm">
     <div class="form-group">
-      <hr />
       <input
         type="text"
         class="form-control"
@@ -13,79 +12,74 @@
         ngModel
         required
       />
-      <small id="taskHelp" class="form-text text-muted">Required field</small>
     </div>
-    <button id="submitButton" type="submit" class="btn btn-primary">
-      Submit
-    </button>
+    <div class="form-group">
+      <select
+        class="form-control"
+        id="category"
+        name="category"
+        ngModel
+        required
+      >
+        <option value="" disabled selected>Select category</option>
+        <option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
-  <table class="table">
+  <table class="table mt-3">
     <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Task</th>
-        <th scope="col">Completed</th>
-        <th scope="col">Delete</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Save</th>
-      </tr>
+    <tr>
+      <th>#</th>
+      <th>Task</th>
+      <th>Category</th>
+      <th>Completed</th>
+      <th>Delete</th>
+      <th>Edit</th>
+      <th>Save</th>
+    </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let task of taskArray; let i = index">
-        <th scope="row">{{ i + 1 }}</th>
-        <td>
-          <input
-            [ngClass]="{
-              'edit': task.isEditable,
-              'not-edit': !task.isEditable,
-              'crossed': task.isCompleted
-            }"
-            #taskinput
-            type="text"
-            class="form-control"
-            id="taskInTable"
-            value="{{ task.taskName }}"
-            [readOnly]="!task.isEditable"
-          />
-        </td>
-        <td>
-          <input
-            type="checkbox"
-            [checked]="task.isCompleted"
-            (change)="onCheck(i)"
-          />
-        </td>
-        <td>
-          <button
-            id="delete"
-            class="btn btn-danger btn-sm"
-            (click)="onDelete(i)"
-          >
-            Delete
-          </button>
-        </td>
-        <td>
-          <button
-            id="edit"
-            class="btn btn-primary btn-sm"
-            (click)="onEdit(i)"
-            [disabled]="task.isEditable"
-          >
-            Edit
-          </button>
-        </td>
-        <td>
-          <button
-            id="save"
-            class="btn btn-warning btn-sm"
-            (click)="onSave(i, taskinput.value)"
-            [disabled]="!task.isEditable"
-          >
-            Save
-          </button>
-        </td>
-      </tr>
+    <tr *ngFor="let task of taskArray; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          [value]="task.taskName"
+          [readOnly]="!task.isEditable"
+          #taskInput
+        />
+      </td>
+      <td>{{ task.category }}</td>
+      <td>
+        <input type="checkbox" [checked]="task.isCompleted" (change)="onCheck(i)" />
+      </td>
+      <td>
+        <button class="btn btn-danger btn-sm" (click)="onDelete(i)">Delete</button>
+      </td>
+      <td>
+        <button
+          class="btn btn-primary btn-sm"
+          (click)="onEdit(i)"
+          [disabled]="task.isEditable"
+        >
+          Edit
+        </button>
+      </td>
+      <td>
+        <button
+          class="btn btn-warning btn-sm"
+          (click)="onSave(i, taskInput.value)"
+          [disabled]="!task.isEditable"
+        >
+          Save
+        </button>
+      </td>
+    </tr>
     </tbody>
   </table>
 </div>

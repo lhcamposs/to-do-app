@@ -43,3 +43,20 @@ h1 {
 .crossed {
   text-decoration: line-through;
 }
+
+table {
+  margin-top: 20px;
+}
+
+td {
+  vertical-align: middle;
+}
+
+.category-label {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.form-control {
+  margin: 20px;
+}

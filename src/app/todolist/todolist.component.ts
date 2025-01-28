@@ -7,30 +7,31 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./todolist.component.css'],
 })
 export class TodolistComponent implements OnInit {
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  ngOnInit(): void {}
+
+  categories = ['Personal', 'Work', 'Studies', 'Others'];
   taskArray = [
-    { taskName: 'Escovar os dentes', isCompleted: false, isEditable: false },
+    {
+      taskName: 'brush teeth',
+      isCompleted: false,
+      isEditable: false,
+      category: 'Personal',
+    },
   ];
 
   onSubmit(form: NgForm) {
-    console.log(form);
-
-    // Adiciona a nova tarefa ao array
-    this.taskArray.push({
-      taskName: form.controls['task'].value,
-      isCompleted: false,
-      isEditable: false,
-    });
-
-    // Reseta o formulário
-    form.reset();
+    if (form.valid) {
+      this.taskArray.push({
+        taskName: form.controls['task'].value,
+        isCompleted: false,
+        isEditable: false,
+        category: form.controls['category'].value || 'Others',
+      });
+      form.reset();
+    }
   }
 
   onDelete(index: number) {
-    console.log(index);
-    // Remove a tarefa do array
     this.taskArray.splice(index, 1);
   }
 
@@ -44,8 +45,6 @@ export class TodolistComponent implements OnInit {
   }
 
   onCheck(index: number) {
-    // Alterna o estado de isCompleted da tarefa
     this.taskArray[index].isCompleted = !this.taskArray[index].isCompleted;
-    console.log(this.taskArray[index]);
   }
 }
