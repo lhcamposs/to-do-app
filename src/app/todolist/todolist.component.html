@@ -63,6 +63,7 @@
       <td>{{ task.category }}</td>
       <td>
         <input
+          id="myCheckbox"
           type="checkbox"
           [checked]="task.isCompleted"
           (change)="onCheck(i)"
